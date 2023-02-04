@@ -9,4 +9,4 @@ https://github.com/Vova-Pol/react-mesto-api-full
 158.160.37.191
 
 URL адрес:
-mesto.vova-pol.nomoredomainsclub.ru
+http://mesto.vova-pol.nomoredomainsclub.ru
