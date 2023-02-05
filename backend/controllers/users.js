@@ -6,6 +6,8 @@ const NotFoundErr = require('../errors/not-found-error');
 const ConflictErr = require('../errors/conflict-error');
 const User = require('../models/user');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 function getUser(req, res, next, userId) {
   User.findById(userId)
     .then((userData) => {
@@ -63,19 +65,19 @@ const getUserById = (req, res, next) => {
 };
 
 const postUser = (req, res, next) => {
-  const {
-    email, password, name, about, avatar,
-  } = req.body;
+  const { email, password, name, about, avatar } = req.body;
 
   bcrypt
     .hash(password, 10)
-    .then((hash) => User.create({
-      email,
-      password: hash,
-      name,
-      about,
-      avatar,
-    }))
+    .then((hash) =>
+      User.create({
+        email,
+        password: hash,
+        name,
+        about,
+        avatar,
+      }),
+    )
     .then((data) => {
       const newUser = JSON.parse(JSON.stringify(data));
       delete newUser.password;
@@ -116,9 +118,13 @@ const login = (req, res, next) => {
 
   User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'secret-key', {
-        expiresIn: '7d',
-      });
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret-key',
+        {
+          expiresIn: '7d',
+        },
+      );
       res.send({ token });
     })
     .catch(next);
