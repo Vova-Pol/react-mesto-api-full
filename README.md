@@ -11,9 +11,7 @@ https://github.com/Vova-Pol/react-mesto-api-full
 URL адреса:
 
 Frontend:
-http://mesto.vova-pol.nomoredomainsclub.ru
 https://mesto.vova-pol.nomoredomainsclub.ru
 
 Backend:
-http://api.mesto.vova-pol.nomoredomainsclub.ru
 https://api.mesto.vova-pol.nomoredomainsclub.ru
