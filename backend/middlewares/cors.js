@@ -1,6 +1,7 @@
 const allowedCors = [
   'http://mesto.vova-pol.nomoredomainsclub.ru',
   'https://mesto.vova-pol.nomoredomainsclub.ru',
+  'http://localhost:3000',
 ];
 
 function checkRequestOrigin(req, res, next) {
