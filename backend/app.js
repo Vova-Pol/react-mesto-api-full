@@ -27,8 +27,8 @@ app.get('/crash-test', () => {
 
 // --- Обработка CORS
 
-app.use(allowRequestHeaders);
 app.use(allowRequestMethods);
+app.use(allowRequestHeaders);
 app.use(checkRequestOrigin);
 
 // --- Обработка роутов
