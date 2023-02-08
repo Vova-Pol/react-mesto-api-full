@@ -5,6 +5,11 @@ const { errors } = require('celebrate');
 const centralErrorHandling = require('./middlewares/centralErrorHandling');
 const mainRouter = require('./routers');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const {
+  checkRequestOrigin,
+  allowRequestHeaders,
+  allowRequestMethods,
+} = require('./middlewares/cors');
 
 const { PORT = 3000 } = process.env;
 const DB_URL = 'mongodb://localhost:27017/mestodb';
@@ -19,6 +24,14 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
+
+// --- Обработка CORS
+
+app.use(allowRequestHeaders);
+app.use(allowRequestMethods);
+app.use(checkRequestOrigin);
+
+// --- Обработка роутов
 
 app.use('/', mainRouter);
 
