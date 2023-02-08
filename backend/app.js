@@ -5,6 +5,7 @@ const { errors } = require('celebrate');
 const centralErrorHandling = require('./middlewares/centralErrorHandling');
 const mainRouter = require('./routers');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const cors = require('cors');
 const {
   checkRequestOrigin,
   checkPreflightRequest,
@@ -26,8 +27,9 @@ app.get('/crash-test', () => {
 
 // --- Обработка CORS
 
-app.use(checkRequestOrigin);
-app.use(checkPreflightRequest);
+// app.use(checkRequestOrigin);
+// app.use(checkPreflightRequest);
+app.use(cors);
 
 // --- Обработка роутов
 
