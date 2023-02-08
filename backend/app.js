@@ -27,10 +27,10 @@ app.get('/crash-test', () => {
 
 // --- Обработка CORS
 
-app.use(checkPreflightRequest);
-app.use(checkRequestOrigin);
+// app.use(checkPreflightRequest);
+// app.use(checkRequestOrigin);
 
-// app.use(cors);
+app.use(cors());
 
 // --- Обработка роутов
 
