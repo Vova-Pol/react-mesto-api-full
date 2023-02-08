@@ -1,27 +1,3 @@
-const allowedMethods = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-
-function allowRequestMethods(req, res, next) {
-  const { method } = req.headers;
-
-  if (method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', allowedMethods);
-  }
-
-  next();
-}
-
-function allowRequestHeaders(req, res, next) {
-  const { method } = req.headers;
-  const requestHeaders = req.headers['access-control-request-headers'];
-
-  if (method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Headers', requestHeaders);
-    return res.end();
-  }
-
-  next();
-}
-
 const allowedCors = [
   'http://mesto.vova-pol.nomoredomainsclub.ru',
   'https://mesto.vova-pol.nomoredomainsclub.ru',
@@ -29,12 +5,25 @@ const allowedCors = [
 
 function checkRequestOrigin(req, res, next) {
   const { origin } = req.headers;
-  console.log(origin);
 
   if (allowedCors.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
-  } else {
-    console.log('No orogin included');
+  }
+
+  next();
+}
+
+const allowedMethods = 'GET,HEAD,PUT,PATCH,POST,DELETE';
+
+function checkPreflightRequest(req, res, next) {
+  const { method } = req.headers;
+  const requestHeaders = req.headers['access-control-request-headers'];
+
+  if (method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', allowedMethods);
+    res.header('Access-Control-Allow-Headers', requestHeaders);
+    res.status(200);
+    return res.end();
   }
 
   next();
@@ -42,6 +31,5 @@ function checkRequestOrigin(req, res, next) {
 
 module.exports = {
   checkRequestOrigin,
-  allowRequestMethods,
-  allowRequestHeaders,
+  checkPreflightRequest,
 };

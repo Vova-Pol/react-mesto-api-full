@@ -7,8 +7,7 @@ const mainRouter = require('./routers');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const {
   checkRequestOrigin,
-  allowRequestHeaders,
-  allowRequestMethods,
+  checkPreflightRequest,
 } = require('./middlewares/cors');
 
 const { PORT = 3000 } = process.env;
@@ -27,9 +26,8 @@ app.get('/crash-test', () => {
 
 // --- Обработка CORS
 
-app.use(allowRequestMethods);
-app.use(allowRequestHeaders);
 app.use(checkRequestOrigin);
+app.use(checkPreflightRequest);
 
 // --- Обработка роутов
 
