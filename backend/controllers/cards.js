@@ -56,6 +56,7 @@ const postCard = (req, res, next) => {
   const { name, link } = req.body;
 
   Card.create({ name, link, owner: req.user._id })
+    .populate(['owner', 'likes'])
     .then((newCard) => {
       res.send({ data: newCard });
     })
