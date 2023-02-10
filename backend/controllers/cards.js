@@ -52,25 +52,23 @@ const getCards = (req, res, next) => {
     .catch(next);
 };
 
-const postCard = (req, res, next) => {
-  const { name, link } = req.body;
+const postCard = async (req, res, next) => {
+  try {
+    const { name, link } = req.body;
 
-  Card.create({ name, link, owner: req.user._id })
-    .populate(['owner', 'likes'])
-    .then((newCard) => {
-      res.send({ data: newCard });
-    })
-    .catch((err) => {
-      if (err instanceof Error.ValidationError) {
-        next(
-          new BadRequestErr(
-            'Переданы некорректные данные при создании карточки',
-          ),
-        );
-      } else {
-        next(err);
-      }
-    });
+    const createdCard = await Card.create({ name, link, owner: req.user._id });
+    await createdCard.populate(['owner']);
+
+    res.send({ data: createdCard });
+  } catch (err) {
+    if (err instanceof Error.ValidationError) {
+      next(
+        new BadRequestErr('Переданы некорректные данные при создании карточки'),
+      );
+    } else {
+      next(err);
+    }
+  }
 };
 
 const deleteCard = async (req, res, next) => {
