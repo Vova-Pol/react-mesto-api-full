@@ -3,8 +3,7 @@ const { celebrate } = require('celebrate');
 const {
   postCardConfig,
   deleteCardConfig,
-  putLikeConfig,
-  deleteLikeConfig,
+  handleLikeConfig,
 } = require('../utils/celebrateValidConfig');
 
 const {
@@ -19,7 +18,7 @@ cardsRouter.get('/', getCards);
 cardsRouter.post('/', celebrate(postCardConfig), postCard);
 cardsRouter.delete('/:cardId', celebrate(deleteCardConfig), deleteCard);
 
-cardsRouter.put('/:cardId/likes', celebrate(putLikeConfig), putLike);
-cardsRouter.delete('/:cardId/likes', celebrate(deleteLikeConfig), deleteLike);
+cardsRouter.put('/:cardId/likes', celebrate(handleLikeConfig), putLike);
+cardsRouter.delete('/:cardId/likes', celebrate(handleLikeConfig), deleteLike);
 
 module.exports = cardsRouter;

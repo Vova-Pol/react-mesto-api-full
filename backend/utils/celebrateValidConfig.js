@@ -22,7 +22,7 @@ const signUpConfig = {
 
 const getUserByIdConfig = {
   params: Joi.object().keys({
-    userId: Joi.string().hex().length(24),
+    userId: Joi.string().required().hex().length(24),
   }),
 };
 
@@ -54,13 +54,7 @@ const deleteCardConfig = {
   }),
 };
 
-const putLikeConfig = {
-  params: Joi.object().keys({
-    cardId: Joi.string().required().hex().length(24),
-  }),
-};
-
-const deleteLikeConfig = {
+const handleLikeConfig = {
   params: Joi.object().keys({
     cardId: Joi.string().required().hex().length(24),
   }),
@@ -74,6 +68,5 @@ module.exports = {
   patchUserAvatarConfig,
   postCardConfig,
   deleteCardConfig,
-  putLikeConfig,
-  deleteLikeConfig,
+  handleLikeConfig,
 };

@@ -79,7 +79,7 @@ const postUser = (req, res, next) => {
       }),
     )
     .then((data) => {
-      const newUser = JSON.parse(JSON.stringify(data));
+      const newUser = data.toObject();
       delete newUser.password;
       res.send({ data: newUser });
     })
