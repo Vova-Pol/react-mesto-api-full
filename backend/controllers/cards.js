@@ -7,8 +7,6 @@ const Card = require('../models/card');
 function handleCardLike(req, res, next, isLiked) {
   let updateConfig;
   let castErrorMessage;
-  console.log(req.user);
-  console.log(req.user._id);
 
   if (!isLiked) {
     updateConfig = { $addToSet: { likes: req.user._id } };
@@ -24,7 +22,7 @@ function handleCardLike(req, res, next, isLiked) {
   }
 
   Card.findByIdAndUpdate(req.params.cardId, updateConfig, { new: true })
-    .populate('likes')
+    .populate(['owner', 'likes'])
     .then((newData) => {
       if (newData) {
         res.send({ data: newData });
