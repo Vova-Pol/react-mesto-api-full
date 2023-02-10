@@ -1,18 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
 const { errors } = require('celebrate');
 const centralErrorHandling = require('./middlewares/centralErrorHandling');
 const mainRouter = require('./routers');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('cors');
+const { PORT, DB_URL } = require('./appConfig');
 const {
   checkRequestOrigin,
   checkPreflightRequest,
 } = require('./middlewares/cors');
-
-const { PORT = 3000 } = process.env;
-const DB_URL = 'mongodb://localhost:27017/mestodb';
 
 const app = express();
 app.use(express.json());
